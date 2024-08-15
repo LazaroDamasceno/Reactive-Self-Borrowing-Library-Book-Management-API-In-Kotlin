@@ -23,17 +23,17 @@ internal class BorrowerSelfRegistrationServiceImpl: BorrowerSelfRegistrationServ
             .getBySsn(request.ssn)
             .hasElement()
             .flatMap { exists ->
-                if (exists) duplicatedSsnError()
-                else defer(request)
+                if (exists) handleDuplicatedSsn()
+                else handleSelfRegistration(request)
             }
     }
 
-    private fun duplicatedSsnError(): Mono<BorrowerResponseDto> {
+    private fun handleDuplicatedSsn(): Mono<BorrowerResponseDto> {
         val message = "Ssn is already used by another borrower.";
         return Mono.error(DuplicatedSsnException(message))
     }
 
-    private fun defer(request: NewBorrowerRequestDto): Mono<BorrowerResponseDto> {
+    private fun handleSelfRegistration(request: NewBorrowerRequestDto): Mono<BorrowerResponseDto> {
         return Mono.defer {
             val borrower: Borrower = BorrowerBuilder.fromDto(request).build()
             val savedBorrower = repository.save(borrower)
