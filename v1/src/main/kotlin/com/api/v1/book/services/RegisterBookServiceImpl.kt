@@ -21,17 +21,17 @@ internal class RegisterBookServiceImpl: RegisterBookService {
     override fun register(@Valid request: NewBookRequestDto): Mono<BookResponseDto> {
         return repository.getByIsbn(request.isbn).hasElement().flatMap {
             exists ->
-                if (exists) duplicatedSsnError()
-                else defer(request)
+                if (exists) handleDuplicatedIsbn()
+                else handleRegistration(request)
         }
     }
 
-    private fun duplicatedSsnError(): Mono<BookResponseDto> {
+    private fun handleDuplicatedIsbn(): Mono<BookResponseDto> {
         val message = "ISBN is already used."
         return Mono.error(DuplicatedSsnException(message));
     }
 
-    private fun defer(request: NewBookRequestDto): Mono<BookResponseDto> {
+    private fun handleRegistration(request: NewBookRequestDto): Mono<BookResponseDto> {
         return Mono.defer {
             val book: Book = BookBuilder.fromDto(request).build()
             val savedBook: Mono<Book> = repository.save(book)
