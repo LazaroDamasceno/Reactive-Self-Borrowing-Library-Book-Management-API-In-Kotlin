@@ -1,7 +1,5 @@
 package com.api.v1.borrow.services
 
-import com.api.v1.annotations.ISBN
-import com.api.v1.annotations.SSN
 import com.api.v1.book.domain.Book
 import com.api.v1.book.utils.BookFinderUtil
 import com.api.v1.borrow.builders.BorrowBuilder
@@ -9,7 +7,7 @@ import com.api.v1.borrow.domain.Borrow
 import com.api.v1.borrow.domain.BorrowRepository
 import com.api.v1.borrow.dtos.BorrowResponseDto
 import com.api.v1.borrow.dtos.NewBorrowRequestDto
-import com.api.v1.borrow.mapper.BorrowResponseMapper
+import com.api.v1.borrow.mappers.BorrowResponseMapper
 import com.api.v1.borrower.domain.Borrower
 import com.api.v1.borrower.utils.BorrowerFinderUtil
 import jakarta.validation.Valid

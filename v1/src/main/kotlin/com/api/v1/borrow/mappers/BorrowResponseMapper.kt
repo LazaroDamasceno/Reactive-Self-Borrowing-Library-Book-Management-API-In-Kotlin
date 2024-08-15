@@ -1,4 +1,4 @@
-package com.api.v1.borrow.mapper
+package com.api.v1.borrow.mappers
 
 import com.api.v1.borrow.domain.Borrow
 import com.api.v1.borrow.dtos.BorrowResponseDto
