@@ -7,6 +7,7 @@ import com.api.v1.borrow.domain.Borrow
 import com.api.v1.borrow.domain.BorrowRepository
 import com.api.v1.borrow.dtos.BorrowResponseDto
 import com.api.v1.borrow.dtos.NewBorrowRequestDto
+import com.api.v1.borrow.exceptions.BorrowLimitReachedException
 import com.api.v1.borrow.mappers.BorrowResponseMapper
 import com.api.v1.borrower.domain.Borrower
 import com.api.v1.borrower.utils.BorrowerFinderUtil
@@ -34,14 +35,35 @@ internal class BorrowBookServiceImpl: BorrowBookService {
             .flatMap { tuple ->
                 val book: Book = tuple.t1
                 val borrower: Borrower = tuple.t2
-                val borrow: Borrow = BorrowBuilder
-                    .create()
-                    .withBorrower(borrower)
-                    .withBook(book)
-                    .build()
-                repository.save(borrow)
+                response(book, borrower)
             }
-            .flatMap { e -> Mono.just(BorrowResponseMapper.map(e)) }
+    }
+
+    private val borrowLimit: Long = 3L
+
+    private fun response(book: Book, borrower: Borrower): Mono<BorrowResponseDto> {
+        return repository
+            .countHowManyActiveBorrowsByBorrowers(borrower)
+            .flatMap { count ->
+                if (count.equals(borrowLimit)) {
+                    handleBorrowLimitReached()
+                }
+                else handleBorrow(book, borrower)
+            }
+    }
+
+    private fun handleBorrowLimitReached():  Mono<BorrowResponseDto> {
+        return Mono.error(BorrowLimitReachedException())
+    }
+
+    private fun handleBorrow(book: Book, borrower: Borrower):  Mono<BorrowResponseDto> {
+        val borrow: Borrow = BorrowBuilder
+            .create()
+            .withBorrower(borrower)
+            .withBook(book)
+            .build()
+        val savedBorrow: Mono<Borrow> = repository.save(borrow)
+        return savedBorrow.flatMap{ b -> Mono.just(BorrowResponseMapper.map(b)) }
     }
 
 }

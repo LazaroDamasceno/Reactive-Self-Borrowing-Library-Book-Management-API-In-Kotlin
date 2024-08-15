@@ -16,4 +16,10 @@ interface BorrowRepository: ReactiveCrudRepository<Borrow, UUID> {
     }""")
     fun get(borrower: Borrower, book: Book): Mono<Borrow>
 
+    @Query("""{ 
+        'borrower': borrower, 
+        'returnedDate': ""
+    }""")
+    fun countHowManyActiveBorrowsByBorrowers(borrower: Borrower): Mono<Borrow>
+
 }
