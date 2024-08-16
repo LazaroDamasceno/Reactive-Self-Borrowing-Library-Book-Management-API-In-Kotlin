@@ -12,9 +12,15 @@ interface BorrowRepository: ReactiveCrudRepository<Borrow, UUID> {
     @Query("""{ 
         'borrower': borrower, 
         'book': book,
-        'returnedDate': null
+        'returnedDate': ""
     }""")
-    fun get(borrower: Borrower, book: Book): Mono<Borrow>
+    fun findActiveBorrow(borrower: Borrower, book: Book): Mono<Borrow>
+
+    @Query("""{ 
+        'borrower': borrower, 
+        'book': book,
+    }""")
+    fun findAnyBorrow(borrower: Borrower, book: Book): Mono<Borrow>
 
     @Query("""{ 
         'borrower': borrower, 

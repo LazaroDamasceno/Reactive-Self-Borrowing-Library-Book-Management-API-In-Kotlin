@@ -15,9 +15,15 @@ class BorrowFinderUtil {
     @Autowired
     private lateinit var repository: BorrowRepository
 
-    fun find(book: Book, borrower: Borrower): Mono<Borrow> {
+    fun findActive(book: Book, borrower: Borrower): Mono<Borrow> {
         return repository
-            .get(borrower, book)
+            .findActiveBorrow(borrower, book)
+            .switchIfEmpty(Mono.error(BorrowNotFoundException()))
+    }
+
+    fun findAny(book: Book, borrower: Borrower): Mono<Borrow> {
+        return repository
+            .findAnyBorrow(borrower, book)
             .switchIfEmpty(Mono.error(BorrowNotFoundException()))
     }
 

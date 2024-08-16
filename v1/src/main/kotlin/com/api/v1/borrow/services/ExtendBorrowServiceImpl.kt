@@ -35,7 +35,7 @@ internal class ExtendBorrowServiceImpl: ExtendBorrowService {
             .flatMap { tuple ->
                 val borrower: Borrower = tuple.t1
                 val book: Book = tuple.t2
-                borrowFinder.find(book, borrower)
+                borrowFinder.findActive(book, borrower)
             }
             .flatMap { borrow ->
                 borrow.extendDueDate()
