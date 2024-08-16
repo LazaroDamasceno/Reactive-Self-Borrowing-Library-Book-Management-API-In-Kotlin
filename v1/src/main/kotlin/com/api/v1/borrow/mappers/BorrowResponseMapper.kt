@@ -8,8 +8,8 @@ class BorrowResponseMapper {
     companion object {
         fun map(borrow: Borrow): BorrowResponseDto {
             return BorrowResponseDto(
-                borrow.borrower,
-                borrow.book,
+                BorrowResponseMapper.map(borrow.borrower),
+                BookResponseMapper.map(borrow.book),
                 borrow.borrowedDate,
                 borrow.dueDate,
                 borrow.extendedDueDate,
