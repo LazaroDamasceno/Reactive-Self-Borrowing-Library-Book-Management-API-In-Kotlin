@@ -16,7 +16,7 @@ class RegisterBookController {
     @Autowired
     private lateinit var service: RegisterBookService
 
-    @PostMapping
+    @PostMapping("registering")
     @ResponseStatus(value = HttpStatus.CREATED)
     fun register(@Valid @RequestBody request: NewBookRequestDto): Mono<BookResponseDto> {
         return service.register(request)

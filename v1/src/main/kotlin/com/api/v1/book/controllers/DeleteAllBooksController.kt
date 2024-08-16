@@ -16,7 +16,7 @@ class DeleteAllBooksController {
     @Autowired
     private lateinit var service: DeleteAllBooksService
 
-    @DeleteMapping
+    @DeleteMapping("purging")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     fun deleteAll(): Mono<Void> {
         return service.deleteAll()

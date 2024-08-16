@@ -20,7 +20,7 @@ internal class ExtendBorrowController {
     @Autowired
     private lateinit var service: ExtendBorrowService
 
-    @PatchMapping("by-borrower/{ssn}/and/by-book/{isbn}")
+    @PatchMapping("by-borrower/{ssn}/and/by-book/{isbn}/extending")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     fun extend(@ISBN @PathVariable isbn: String, @SSN @PathVariable ssn: String): Mono<Borrow> {
         return service.extend(isbn, ssn)

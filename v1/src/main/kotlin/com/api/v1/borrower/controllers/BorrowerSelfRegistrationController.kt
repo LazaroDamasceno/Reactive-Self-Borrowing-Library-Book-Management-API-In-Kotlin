@@ -16,7 +16,7 @@ internal class BorrowerSelfRegistrationController {
     @Autowired
     private lateinit var service: BorrowerSelfRegistrationService
 
-    @PostMapping
+    @PostMapping("registering")
     @ResponseStatus(value = HttpStatus.CREATED)
     fun selfRegister(@Valid @RequestBody request: NewBorrowerRequestDto): Mono<BorrowerResponseDto> {
         return service.selfRegister(request)

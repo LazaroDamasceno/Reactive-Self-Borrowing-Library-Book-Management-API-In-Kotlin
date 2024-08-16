@@ -20,7 +20,7 @@ class UpdateBookDataController {
     @Autowired
     private lateinit var service: UpdateBookDataService
 
-    @PutMapping("{isbn}")
+    @PutMapping("{isbn}/updating")
     fun update(
         @ISBN @PathVariable isbn: String,
         @Valid @RequestBody request: UpdateBookRequestDto

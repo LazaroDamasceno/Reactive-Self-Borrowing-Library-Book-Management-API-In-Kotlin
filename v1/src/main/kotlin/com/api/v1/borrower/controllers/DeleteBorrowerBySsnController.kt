@@ -20,7 +20,7 @@ internal class DeleteBorrowerBySsnController {
     @Autowired
     private lateinit var service: DeleteBorrowerBySsnService
 
-    @DeleteMapping("{ssn}")
+    @DeleteMapping("{ssn}/purging")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     fun deleteBySsn(@SSN @PathVariable ssn: String): Mono<Void> {
         return service.deleteBySsn(ssn);

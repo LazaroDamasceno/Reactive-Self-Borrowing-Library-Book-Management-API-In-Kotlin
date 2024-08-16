@@ -20,7 +20,7 @@ internal class FinishBorrowController {
     @Autowired
     private lateinit var service: FinishBorrowServiceImpl
 
-    @PatchMapping("by-book/{isbn}/and/by-borrower/{ssn}")
+    @PatchMapping("by-book/{isbn}/and/by-borrower/{ssn}/archiving")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     fun finish(@ISBN @PathVariable isbn: String, @SSN @PathVariable ssn: String): Mono<Borrow> {
         return service.finish(isbn, ssn)

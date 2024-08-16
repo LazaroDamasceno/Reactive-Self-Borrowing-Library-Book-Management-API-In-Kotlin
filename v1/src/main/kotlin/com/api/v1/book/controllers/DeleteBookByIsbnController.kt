@@ -20,7 +20,7 @@ class DeleteBookByIsbnController {
     @Autowired
     private lateinit var service: DeleteBookByIsbnService
 
-    @DeleteMapping("{isbn}")
+    @DeleteMapping("{isbn}/purging")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     fun deleteByIsbn(@ISBN @PathVariable isbn: String): Mono<Void> {
         return service.deleteByIsbn(isbn);

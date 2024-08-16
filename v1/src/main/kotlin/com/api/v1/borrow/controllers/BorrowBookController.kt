@@ -20,7 +20,7 @@ internal class BorrowBookController {
     @Autowired
     private lateinit var service: BorrowBookServiceImpl
 
-    @PostMapping
+    @PostMapping("borrowing")
     @ResponseStatus(value = HttpStatus.CREATED)
     fun borrow(@Valid @RequestBody request: NewBorrowRequestDto): Mono<BorrowResponseDto> {
         return service.borrow(request)

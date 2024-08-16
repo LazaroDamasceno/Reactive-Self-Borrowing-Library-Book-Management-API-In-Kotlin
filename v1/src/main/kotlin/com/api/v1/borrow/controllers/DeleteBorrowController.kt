@@ -19,7 +19,7 @@ internal class DeleteBorrowController {
     @Autowired
     private lateinit var service: DeleteBorrowService
 
-    @DeleteMapping("by-book/{isbn}/and/by-borrower/{ssn}")
+    @DeleteMapping("by-book/{isbn}/and/by-borrower/{ssn}/purging")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     fun delete(@ISBN @PathVariable isbn: String, @SSN @PathVariable  ssn: String): Mono<Void> {
         return service.delete(isbn, ssn)

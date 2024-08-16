@@ -24,7 +24,7 @@ internal class UpdateBorrowerController {
     @Autowired
     private lateinit var service: UpdateBorrowerService
 
-    @PutMapping("{ssn}")
+    @PutMapping("{ssn}/updating")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     fun update(
         @PathVariable @SSN ssn: String,
