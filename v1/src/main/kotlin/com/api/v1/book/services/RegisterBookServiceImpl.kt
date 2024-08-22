@@ -19,7 +19,13 @@ internal class RegisterBookServiceImpl: RegisterBookService {
     private lateinit var repository: BookRepository
 
     override fun register(@Valid request: NewBookRequestDto): Mono<BookResponseDto> {
-        return repository.getByIsbn(request.isbn).hasElement().flatMap {
+        return repository
+            .findAll()
+            .filter { e -> e.archivedAt.isEmpty()
+                    && e.isbn == request.isbn
+            }
+            .hasElements()
+            .flatMap {
             exists ->
                 if (exists) handleDuplicatedIsbn()
                 else handleRegistration(request)

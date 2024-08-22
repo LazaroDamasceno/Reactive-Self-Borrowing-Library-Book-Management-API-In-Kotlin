@@ -15,7 +15,9 @@ class BorrowerFinderUtil {
 
      fun find(ssn: String): Mono<Borrower> {
          return repository
-             .getBySsn(ssn)
+             .findAll()
+             .filter { e -> e.ssn == ssn && e.archivedAt.isEmpty() }
+             .singleOrEmpty()
              .switchIfEmpty(Mono.error(BorrowerNotFoundException()))
      }
 

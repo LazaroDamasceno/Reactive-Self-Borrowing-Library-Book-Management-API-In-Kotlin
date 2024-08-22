@@ -11,5 +11,4 @@ data class BorrowerResponseDto(
     val gender: String,
     val phoneNumber: String,
     val createdAt: String,
-    val updatedAt: String
 )

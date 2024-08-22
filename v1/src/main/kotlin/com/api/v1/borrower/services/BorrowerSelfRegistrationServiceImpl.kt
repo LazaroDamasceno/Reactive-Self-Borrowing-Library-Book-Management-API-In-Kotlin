@@ -20,7 +20,9 @@ internal class BorrowerSelfRegistrationServiceImpl: BorrowerSelfRegistrationServ
 
     override fun selfRegister(request: NewBorrowerRequestDto): Mono<BorrowerResponseDto> {
         return repository
-            .getBySsn(request.ssn)
+            .findAll()
+            .filter { e -> e.ssn == request.ssn && e.archivedAt.isEmpty() }
+            .singleOrEmpty()
             .hasElement()
             .flatMap { exists ->
                 if (exists) handleDuplicatedSsn()

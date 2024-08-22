@@ -12,7 +12,7 @@ import java.util.*
 class Borrower {
 
     @Id
-    val id: UUID
+    var id: UUID
 
     @Field
     var firstName: String
@@ -45,7 +45,7 @@ class Borrower {
     val createdAt: String
 
     @Field
-    var updatedAt: String = ""
+    var archivedAt: String = ""
 
     constructor(
         id: UUID,
@@ -78,7 +78,8 @@ class Borrower {
         return "$firstName $middleName $lastName"
     }
 
-    fun update(request: UpdateBorrowerRequestDto) {
+    fun update(request: UpdateBorrowerRequestDto): Borrower {
+        this.id = UUID.randomUUID()
         this.firstName = request.firstName
         this.middleName = request.middleName
         this.lastName = request.lastName
@@ -87,7 +88,12 @@ class Borrower {
         this.address = request.address
         this.gender = request.gender
         this.phoneNumber = request.phoneNumber
-        this.updatedAt = ZonedDateTime.now().toString()
+        return this
+    }
+
+    fun archive(): Borrower {
+        this.archivedAt = ZonedDateTime.now().toString()
+        return this
     }
 
 }

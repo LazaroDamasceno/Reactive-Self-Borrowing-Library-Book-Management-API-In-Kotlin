@@ -15,8 +15,7 @@ class BorrowerResponseMapper {
                 borrower.address,
                 borrower.gender,
                 borrower.phoneNumber,
-                borrower.createdAt,
-                borrower.updatedAt
+                borrower.createdAt
             )
         }
     }

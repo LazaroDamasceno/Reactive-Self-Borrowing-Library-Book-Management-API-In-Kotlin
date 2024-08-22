@@ -27,11 +27,15 @@ internal class UpdateBorrowerServiceImpl: UpdateBorrowerService {
     ): Mono<Borrower> {
         return finder
             .find(ssn)
-            .flatMap {
-                b -> Mono.defer {
-                    b.update(request)
-                    repository.save(b)
-            }}
+            .flatMap { borrower ->
+                val archivedBorrower = borrower.archive();
+                repository
+                    .save(archivedBorrower)
+                    .flatMap { oldBorrower ->
+                        val updatedBorrower = oldBorrower.update(request)
+                        repository.save(updatedBorrower)
+                    }
+            }
     }
 
 }

@@ -12,7 +12,7 @@ import java.util.UUID;
 class Book {
 
     @Id
-    val id: UUID
+    var id: UUID
 
     @Field
     var title: String
@@ -45,7 +45,7 @@ class Book {
     val addedAt: String
 
     @Field
-    var updatedAt: String = ""
+    var archivedAt: String = ""
 
     constructor(
         id: UUID,
@@ -78,7 +78,8 @@ class Book {
         return "$title $subtitle"
     }
 
-    fun update(request: UpdateBookRequestDto) {
+    fun update(request: UpdateBookRequestDto): Book {
+        this.id = UUID.randomUUID()
         this.title = request.title
         this.subtitle = request.subtitle
         this.publisher = request.publisher
@@ -86,7 +87,12 @@ class Book {
         this.numberOfPages = request.numberOfPages
         this.author = request.author
         this.field = request.field
-        this.updatedAt = ZonedDateTime.now().toString()
+        return this
+    }
+
+    fun archive(): Book {
+        this.archivedAt = ZonedDateTime.now().toString()
+        return this
     }
 
 }
