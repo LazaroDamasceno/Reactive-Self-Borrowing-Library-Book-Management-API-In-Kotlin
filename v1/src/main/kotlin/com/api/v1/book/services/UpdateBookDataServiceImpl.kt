@@ -26,11 +26,12 @@ internal class UpdateBookDataServiceImpl: UpdateBookDataService {
         return finder.find(isbn)
             .flatMap { book ->
                 val archivedBook = book.archive()
-                repository
-                    .save(archivedBook)
-                    .flatMap { oldBook ->
-                        val updatedBook = oldBook.update(request)
-                        repository.save(updatedBook)
-    }}}
+                repository.save(archivedBook)
+            }
+            .flatMap { oldBook ->
+                val updatedBook = oldBook.update(request)
+                repository.save(updatedBook)
+            }
+    }
 
 }

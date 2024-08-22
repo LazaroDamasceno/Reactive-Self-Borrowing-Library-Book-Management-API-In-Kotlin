@@ -29,12 +29,11 @@ internal class UpdateBorrowerServiceImpl: UpdateBorrowerService {
             .find(ssn)
             .flatMap { borrower ->
                 val archivedBorrower = borrower.archive();
-                repository
-                    .save(archivedBorrower)
-                    .flatMap { oldBorrower ->
-                        val updatedBorrower = oldBorrower.update(request)
-                        repository.save(updatedBorrower)
-                    }
+                repository.save(archivedBorrower)
+            }
+            .flatMap { oldBorrower ->
+                val updatedBorrower = oldBorrower.update(request)
+                repository.save(updatedBorrower)
             }
     }
 
