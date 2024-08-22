@@ -16,8 +16,7 @@ class BookResponseMapper {
                 book.numberOfPages,
                 book.author,
                 book.field,
-                book.addedAt,
-                book.updatedAt
+                book.addedAt
             )
         }
     }

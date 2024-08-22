@@ -10,5 +10,4 @@ data class BookResponseDto(
     val author: String,
     val field: String,
     val addedAt: String,
-    val updatedAt: String
 )
